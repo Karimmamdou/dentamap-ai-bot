@@ -369,21 +369,23 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ------------------- MAIN ENTRY -------------------
 
 
-async def run_bot():
+# ------------------- MAIN ENTRY -------------------
+
+
+def main():
     if not TELEGRAM_TOKEN:
         print("❌ TELEGRAM_BOT_TOKEN is missing in environment.")
         return
 
     app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 
+    # Handlers
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     app.add_handler(CallbackQueryHandler(handle_callback))
 
     print("🚀 DentaMap AI bot is running on Render (CSV + HYBRID GPT-4o mini)...")
-    await app.run_polling()
+    app.run_polling()
 
 
 if __name__ == "__main__":
-    import asyncio
-
-    asyncio.run(run_bot())
+    main()
